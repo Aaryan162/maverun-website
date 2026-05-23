@@ -45,9 +45,9 @@ export default function FAQ() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {faqs.map((faq, i) => (
               <ScrollReveal key={i} delay={i * 0.03}>
-                <div 
+                <div
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  style={{ 
+                  style={{
                     padding: '28px 32px', borderRadius: 16, cursor: 'pointer',
                     border: `1px solid ${openFaq === i ? 'rgba(26,143,255,0.3)' : 'var(--color-border)'}`,
                     background: openFaq === i ? 'rgba(26,143,255,0.03)' : 'transparent',
@@ -58,7 +58,7 @@ export default function FAQ() {
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
                     <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 18, fontWeight: 700, color: openFaq === i ? 'var(--color-blue-electric)' : '#fff', margin: 0, transition: 'color 0.3s' }}>{faq.q}</h3>
-                    <div style={{ 
+                    <div style={{
                       width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
                       border: `1px solid ${openFaq === i ? 'var(--color-blue-electric)' : 'var(--color-border)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -95,3 +95,6 @@ export default function FAQ() {
     </>
   );
 }
+
+
+
