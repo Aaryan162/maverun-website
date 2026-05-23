@@ -1,0 +1,33 @@
+# ================================================
+# MAVERUN — robots.txt
+# Website: https://maverun.com
+# ================================================
+
+# Allow all search engine crawlers
+User-agent: *
+Allow: /
+
+# Block non-public paths (dev/build artifacts)
+Disallow: /src/
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /.env
+Disallow: /.env.local
+
+# Google Search Bot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing Search Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+# Sitemap location
+Sitemap: https://maverun.com/sitemap.xml
+
