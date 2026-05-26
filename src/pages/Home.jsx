@@ -121,7 +121,7 @@ function HeroSection() {
           <h1 style={{ marginBottom: 24, fontSize: 'clamp(3.5rem, 9vw, 7rem)' }}>From Clicks<br />to <span className="gradient-text-animated">Code.</span></h1>
         </ScrollReveal>
         <ScrollReveal delay={0.35}>
-          <p style={{ fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', color: 'var(--color-text-muted)', maxWidth: 650, margin: '0 auto 40px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 500, maxWidth: 650, margin: '0 auto 40px', lineHeight: 1.6, letterSpacing: '-0.01em' }}>
             We build performance systems that scale globally — paid media, AI automation, and web development for companies that demand results.
           </p>
         </ScrollReveal>
@@ -447,8 +447,8 @@ function StackSection() {
       <style>{`
         .stack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
         .stack-card { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 24px 16px; text-align: center; transition: all 0.4s ease; min-width: 140px; flex-shrink: 0; }
-        .stack-card .stack-img { filter: grayscale(1) opacity(0.5); transition: all 0.4s ease; }
-        .stack-card:hover .stack-img, .stack-card-centered .stack-img { filter: grayscale(0) opacity(1) drop-shadow(0 0 15px var(--card-color)) drop-shadow(0 0 5px var(--card-color)) brightness(1.3); transform: scale(1.1); }
+        .stack-card .stack-img { filter: grayscale(0) opacity(1); transition: all 0.4s ease; }
+        .stack-card:hover .stack-img, .stack-card-centered .stack-img { filter: drop-shadow(0 0 15px var(--card-color)) drop-shadow(0 0 5px var(--card-color)) brightness(1.3); transform: scale(1.1); }
       `}</style>
     </section>
   );

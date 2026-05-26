@@ -65,7 +65,7 @@ export default function Navbar() {
         </div>
 
         <Link to="/contact" className="nav-cta-desktop" style={{ 
-          padding: '12px 28px', fontSize: 16, borderRadius: '30px', fontWeight: 600,
+          padding: '12px 28px', fontSize: 16, borderRadius: '24px 4px 24px 4px', fontWeight: 600,
           background: 'linear-gradient(90deg, rgba(28,30,36,0.6), rgba(26,143,255,0.1))',
           color: '#fff', border: '1px solid rgba(26,143,255,0.3)',
           boxShadow: '0 0 20px rgba(26,143,255,0.1), inset 0 0 15px rgba(26,143,255,0.1)',
@@ -97,21 +97,21 @@ export default function Navbar() {
         opacity: mobileOpen ? 1 : 0, pointerEvents: mobileOpen ? 'auto' : 'none',
         transition: 'opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 32, width: '100%' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20, width: '100%' }}>
           {navLinks.map((link, index) => (
             <Link key={link.path} to={link.path} className={`mobile-link ${mobileOpen ? 'visible' : ''}`} style={{
-              fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 300, letterSpacing: '-0.02em',
-              color: pathname === link.path ? '#fff' : 'rgba(255,255,255,0.4)', textDecoration: 'none',
+              fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 500, letterSpacing: '0.01em',
+              color: pathname === link.path ? '#fff' : 'rgba(255,255,255,0.6)', textDecoration: 'none',
               transition: 'all 0.3s ease', transitionDelay: `${index * 0.05}s`
             }}>{link.label}</Link>
           ))}
           <Link to="/contact" className={`mobile-link mobile-cta ${mobileOpen ? 'visible' : ''}`} style={{ 
-            marginTop: 40, width: '80%', maxWidth: 320, padding: '18px 32px', borderRadius: '30px',
-            background: 'var(--color-blue-electric)', color: '#fff', fontSize: '1.2rem', fontWeight: 600,
-            textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12,
-            boxShadow: '0 10px 30px rgba(26,143,255,0.4)', transitionDelay: '0.35s'
+            marginTop: 32, width: '80%', maxWidth: 280, padding: '14px 24px', borderRadius: '24px 4px 24px 4px',
+            background: 'var(--color-blue-electric)', color: '#fff', fontSize: '1.1rem', fontWeight: 600,
+            textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10,
+            boxShadow: '0 8px 25px rgba(26,143,255,0.3)', transitionDelay: '0.35s'
           }}>
-            Start a Project <ArrowRight size={20} />
+            Start a Project <ArrowRight size={18} />
           </Link>
         </div>
         
