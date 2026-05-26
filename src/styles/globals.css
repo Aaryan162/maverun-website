@@ -28,8 +28,8 @@
   /* Text */
   --color-text-primary:  #F5F7FA;
   --color-text-secondary:#B0BAC9;
-  --color-text-muted:    #64748B;
-  --color-text-steel:    #475569;
+  --color-text-muted:    #94A3B8; /* Slate 400 - Passes 4.5:1 contrast */
+  --color-text-steel:    #828F9E; /* Lightened to pass 4.5:1 contrast */
   --color-text-light:    #0F172A;
 
   /* Borders */

@@ -566,7 +566,7 @@ function TestimonialsSection() {
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginTop: 48 }}>
             {testimonials.map((_, i) => (
-              <button key={i} onClick={() => setActive(i)} style={{ width: i === active ? 40 : 12, height: 4, borderRadius: 2, background: i === active ? 'var(--color-blue-electric)' : 'rgba(255,255,255,0.2)', transition: 'all 0.4s ease', cursor: 'pointer', border: 'none' }} />
+              <button key={i} aria-label={`View testimonial ${i + 1}`} onClick={() => setActive(i)} style={{ width: i === active ? 40 : 12, height: 4, borderRadius: 2, background: i === active ? 'var(--color-blue-electric)' : 'rgba(255,255,255,0.2)', transition: 'all 0.4s ease', cursor: 'pointer', border: 'none' }} />
             ))}
           </div>
         </ScrollReveal>

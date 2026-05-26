@@ -34,6 +34,7 @@ export default function HeroBackgroundVideo() {
           loop
           muted
           playsInline
+          fetchpriority="high"
           preload="auto"
           aria-hidden="true"
           style={{ opacity: videoLoaded ? 1 : 0 }}

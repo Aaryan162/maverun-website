@@ -42,19 +42,19 @@ export default function Navbar() {
         transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
       }}>
         <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', position: 'relative', zIndex: 101 }}>
-          <img src={maverunLogo} alt="MAVERUN" style={{ height: 38, width: 'auto', objectFit: 'contain' }} />
+          <img src={maverunLogo} alt="MAVERUN" width="196" height="38" style={{ height: 38, width: 'auto', objectFit: 'contain' }} />
         </Link>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 48 }} className="nav-desktop">
           {navLinks.map(link => (
             <Link key={link.path} to={link.path} style={{
               fontFamily: 'var(--font-heading)', fontSize: 17, fontWeight: 500, letterSpacing: '0.02em',
-              color: pathname === link.path ? '#fff' : 'rgba(255,255,255,0.5)',
+              color: pathname === link.path ? '#fff' : 'rgba(255,255,255,0.7)',
               transition: 'all 0.3s ease',
               position: 'relative'
             }}
               onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.textShadow = '0 0 10px rgba(255,255,255,0.3)'; }}
-              onMouseLeave={e => { if (pathname !== link.path) { e.target.style.color = 'rgba(255,255,255,0.5)'; e.target.style.textShadow = 'none'; } }}
+              onMouseLeave={e => { if (pathname !== link.path) { e.target.style.color = 'rgba(255,255,255,0.7)'; e.target.style.textShadow = 'none'; } }}
             >
               {link.label}
               {pathname === link.path && (
@@ -79,7 +79,7 @@ export default function Navbar() {
           <div className="btn-shimmer" style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', background: 'linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.1) 50%, transparent 75%)', transition: 'left 0.6s ease' }} />
         </Link>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="nav-mobile-btn" style={{ 
+        <button onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"} className="nav-mobile-btn" style={{ 
           display: 'none', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', 
           color: '#fff', padding: 10, borderRadius: '50%', position: 'relative', zIndex: 101,
           backdropFilter: 'blur(10px)', transition: 'all 0.3s ease'
