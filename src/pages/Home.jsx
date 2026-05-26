@@ -38,18 +38,18 @@ const testimonials = [
 ];
 
 const heroStackItems = [
-  { name: 'Google Ads', color: '#4285F4', img: 'https://img.icons8.com/color/144/google-ads.png' },
-  { name: 'Meta', color: '#0668E1', img: 'https://img.icons8.com/color/144/meta.png' },
-  { name: 'GA4', color: '#E37400', img: 'https://img.icons8.com/color/144/google-analytics.png' },
-  { name: 'TikTok', color: '#ffffff', img: 'https://img.icons8.com/nolan/144/tiktok.png' },
+  { name: 'Google Ads', color: '#4285F4', img: 'https://img.icons8.com//48/google-ads.png' },
+  { name: 'Meta', color: '#0668E1', img: 'https://img.icons8.com//48/meta.png' },
+  { name: 'GA4', color: '#E37400', img: 'https://img.icons8.com//48/google-analytics.png' },
+  { name: 'TikTok', color: '#ffffff', img: 'https://img.icons8.com//48/tiktok.png' },
   { name: 'LinkedIn', color: '#0A66C2', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linkedin/linkedin-original.svg' },
   { name: 'React', color: '#61DAFB', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg' },
   { name: 'Next.js', color: '#ffffff', slug: 'nextdotjs' },
   { name: 'Node.js', color: '#339933', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg' },
-  { name: 'Shopify', color: '#96BF48', img: 'https://img.icons8.com/color/144/shopify.png' },
+  { name: 'Shopify', color: '#96BF48', img: 'https://img.icons8.com//48/shopify.png' },
   { name: 'Flutter', color: '#02569B', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg' },
-  { name: 'OpenAI', color: '#10A37F', img: 'https://img.icons8.com/color/144/chatgpt.png' },
-  { name: 'AWS', color: '#FF9900', img: 'https://img.icons8.com/color/144/amazon-web-services.png' },
+  { name: 'OpenAI', color: '#10A37F', img: 'https://img.icons8.com//48/chatgpt.png' },
+  { name: 'AWS', color: '#FF9900', img: 'https://img.icons8.com//48/amazon-web-services.png' },
   { name: 'Firebase', color: '#FFCA28', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg' },
   { name: 'GitHub', color: '#ffffff', slug: 'github' },
   { name: 'Vercel', color: '#ffffff', slug: 'vercel' },
@@ -57,15 +57,15 @@ const heroStackItems = [
 ];
 
 const expandedStackItems = [
-  { name: 'Snapchat', color: '#FFFC00', img: 'https://img.icons8.com/color/144/snapchat.png' },
-  { name: 'GTM', color: '#8AB4F8', img: 'https://img.icons8.com/color/144/google-tag-manager.png' },
+  { name: 'Snapchat', color: '#FFFC00', img: 'https://img.icons8.com//48/snapchat.png' },
+  { name: 'GTM', color: '#8AB4F8', img: 'https://img.icons8.com//48/google-tag-manager.png' },
   { name: 'Figma', color: '#F24E1E', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg' },
   { name: 'Make', color: '#8000FF', slug: 'make' },
-  { name: 'Zapier', color: '#FF4A00', img: 'https://img.icons8.com/color/144/zapier.png' },
+  { name: 'Zapier', color: '#FF4A00', img: 'https://img.icons8.com//48/zapier.png' },
   { name: 'WordPress', color: '#21759B', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/wordpress/wordpress-plain.svg' },
   { name: 'Kotlin', color: '#7F52FF', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg' },
   { name: 'Swift', color: '#FA7343', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg' },
-  { name: 'Stripe', color: '#635BFF', img: 'https://img.icons8.com/color/144/stripe.png' },
+  { name: 'Stripe', color: '#635BFF', img: 'https://img.icons8.com//48/stripe.png' },
   { name: 'Ahrefs', color: '#FF8C00', img: 'https://icon.horse/icon/ahrefs.com' },
   { name: 'Semrush', color: '#FF642D', slug: 'semrush' },
   { name: 'HubSpot', color: '#FF7A59', slug: 'hubspot' },
@@ -244,11 +244,11 @@ function ProcessSection() {
 
         {/* Floating Light Orbs */}
         <div style={{ position: 'absolute', top: '60%', left: '20%', width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.8)', boxShadow: '0 0 20px 2px rgba(26,143,255,0.5)', transform: `translateX(${(currentProgress / 100) * 60}vw) translateY(${Math.sin(currentProgress / 5) * 30}px)`, pointerEvents: 'none', transition: 'none' }} />
-        <div style={{ position: 'absolute', top: '30%', right: '20%', width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(255,255,255,0.4)', boxShadow: '0 0 15px 1px rgba(26,143,255,0.3)', transform: `translateX(${-(currentProgress / 100) * 30}vw) translateY(${Math.cos(currentProgress / 5) * 40}px)`, pointerEvents: 'none', transition: 'none' }} />
+        <div style={{ position: 'absolute', top: '30%', right: '20%', width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(255,255,255,0.7)', boxShadow: '0 0 15px 1px rgba(26,143,255,0.3)', transform: `translateX(${-(currentProgress / 100) * 30}vw) translateY(${Math.cos(currentProgress / 5) * 40}px)`, pointerEvents: 'none', transition: 'none' }} />
 
         {/* Top Content */}
         <div style={{ position: 'relative', zIndex: 10 }}>
-          <div style={{ display: 'inline-block', padding: '6px 14px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '30px', color: 'rgba(255,255,255,0.5)', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '32px', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(10px)' }}>How we work</div>
+          <div style={{ display: 'inline-block', padding: '6px 14px', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '30px', color: 'rgba(255,255,255,0.8)', fontSize: '11px', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '32px', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(10px)' }}>How we work</div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#fff', fontWeight: 400, letterSpacing: '-0.02em', maxWidth: '600px', lineHeight: 1.1, margin: 0 }}>No guesswork.<br /><span style={{ color: 'var(--color-blue-electric)', textShadow: '0 0 20px rgba(26,143,255,0.3)' }}>Just a proven system.</span></h2>
         </div>
 
@@ -282,12 +282,12 @@ function ProcessSection() {
                 textAlign: 'left',
                 pointerEvents: opacity > 0.5 ? 'auto' : 'none'
               }}>
-                <div style={{ fontSize: '13px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.4)', marginBottom: '16px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '16px', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: '13px', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.7)', marginBottom: '16px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '16px', textTransform: 'uppercase' }}>
                   <div style={{ width: '40px', height: '1px', background: 'rgba(255,255,255,0.2)' }} />
                   {s.num}
                 </div>
                 <h3 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', color: '#fff', marginBottom: '24px', fontWeight: 300, letterSpacing: '-0.02em', lineHeight: 1.1 }}>{s.title}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: 'clamp(1rem, 1.2vw, 1.25rem)', lineHeight: 1.8, maxWidth: '400px', fontWeight: 300 }}>{s.desc}</p>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 'clamp(1rem, 1.2vw, 1.25rem)', lineHeight: 1.8, maxWidth: '400px', fontWeight: 300 }}>{s.desc}</p>
               </div>
             )
           })}
@@ -521,7 +521,7 @@ function WhySection() {
                 <span style={{ fontFamily: 'var(--font-heading)', fontSize: 72, fontWeight: 900, marginBottom: 24, display: 'block', lineHeight: 1, position: 'relative', zIndex: 1, transition: 'all 0.5s ease',
                   color: isCenter ? '#fff' : 'transparent',
                   WebkitTextStroke: isCenter ? '0px' : '2px rgba(255,255,255,0.1)',
-                  textShadow: isCenter ? '0 0 30px rgba(255,255,255,0.5)' : 'none',
+                  textShadow: isCenter ? '0 0 30px rgba(255,255,255,0.8)' : 'none',
                   transform: isCenter ? 'translateX(12px)' : 'translateX(0)'
                 }}>
                   {String((i % totalItems) + 1).padStart(2, '0')}
@@ -594,7 +594,7 @@ function HomeFAQSection() {
                   background: openFaq === i ? 'rgba(26,143,255,0.03)' : 'transparent', transition: 'all 0.3s ease'
                 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
-                  <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 18, fontWeight: 700, color: openFaq === i ? 'var(--color-blue-electric)' : '#fff', margin: 0, transition: 'color 0.3s' }}>{faq.q}</h4>
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: 18, fontWeight: 700, color: openFaq === i ? 'var(--color-blue-electric)' : '#fff', margin: 0, transition: 'color 0.3s' }}>{faq.q}</h3>
                   <ChevronDown size={20} style={{ color: 'var(--color-blue-electric)', flexShrink: 0, transition: 'transform 0.3s', transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0)' }} />
                 </div>
                 <div style={{ maxHeight: openFaq === i ? 200 : 0, overflow: 'hidden', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)' }}>
