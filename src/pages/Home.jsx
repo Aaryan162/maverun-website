@@ -4,7 +4,7 @@ import { ArrowRight, ChevronDown } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import AnimatedCounter from '../components/AnimatedCounter';
 import Marquee from '../components/Marquee';
-import HeroBackground from '../components/HeroBackground';
+import HeroBackgroundVideo from '../components/HeroBackgroundVideo';
 
 const cases = [
   { name: 'Automotive', cat: 'Automotive · Paid Media', metric: '+340%', metricLabel: 'Lead Volume', desc: 'Multi-dealer, multi-platform campaign architecture across GCC markets.', hoverBg: '#020617' },
@@ -109,7 +109,7 @@ const homeFaqs = [
 function HeroSection() {
   return (
     <section style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative', overflow: 'hidden', padding: '100px 24px 40px' }}>
-      <HeroBackground />
+      <HeroBackgroundVideo />
       <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000 }}>
         <ScrollReveal delay={0.1}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '1px solid var(--color-border)', borderRadius: 100, padding: '8px 24px', fontSize: 14, fontWeight: 600, fontFamily: 'var(--font-heading)', color: 'var(--color-text-secondary)', marginBottom: 32, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)' }}>
@@ -121,7 +121,7 @@ function HeroSection() {
           <h1 style={{ marginBottom: 24, fontSize: 'clamp(3.5rem, 9vw, 7rem)' }}>From Clicks<br />to <span className="gradient-text-animated">Code.</span></h1>
         </ScrollReveal>
         <ScrollReveal delay={0.35}>
-          <p style={{ fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', fontFamily: 'var(--font-heading)', color: '#fff', fontWeight: 500, maxWidth: 650, margin: '0 auto 40px', lineHeight: 1.6, letterSpacing: '-0.01em' }}>
+          <p style={{ fontSize: 'clamp(1.15rem, 1.8vw, 1.4rem)', fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", color: '#fff', fontWeight: 400, maxWidth: 650, margin: '0 auto 40px', lineHeight: 1.7, letterSpacing: '0.01em' }}>
             We build performance systems that scale globally — paid media, AI automation, and web development for companies that demand results.
           </p>
         </ScrollReveal>
