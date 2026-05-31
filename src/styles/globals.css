@@ -499,13 +499,13 @@ section {
   inset: 0;
   background:
     /* Top edge fade — seamless navbar blend */
-    linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 30%),
+    linear-gradient(180deg, rgba(0,0,0,0.80) 0%, transparent 28%),
     /* Bottom edge fade — seamless section transition */
-    linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 35%),
-    /* Left/right vignette */
-    linear-gradient(90deg, rgba(0,0,0,0.6) 0%, transparent 25%, transparent 75%, rgba(0,0,0,0.6) 100%),
-    /* Overall dark tint to keep brand atmosphere dominant */
-    linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.45) 50%, rgba(0,0,0,0.6) 100%);
+    linear-gradient(0deg, rgba(0,0,0,0.88) 0%, transparent 32%),
+    /* Right-side subtle vignette only (left handled by JSX overlay) */
+    linear-gradient(90deg, transparent 60%, rgba(0,0,0,0.35) 100%),
+    /* Overall cinematic tint — lighter than before to let video breathe */
+    linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.28) 50%, rgba(0,0,0,0.42) 100%);
   pointer-events: none;
   z-index: 1;
 }

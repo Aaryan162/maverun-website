@@ -19,7 +19,7 @@ export default function Preloader({ onComplete }) {
       onComplete: () => {
         gsap.to(containerRef.current, {
           opacity: 0,
-          duration: 1.2,
+          duration: 0.8,           // was 1.2 — snappier exit
           ease: "power2.inOut",
           onComplete: onComplete
         });
@@ -29,70 +29,70 @@ export default function Preloader({ onComplete }) {
     // 1. Arc appearance
     tl.to(arcRef.current, {
       strokeDashoffset: 0,
-      duration: 3.0,
+      duration: 1.8,               // was 3.0
       ease: "power3.inOut",
     }, 0);
-    
+
     tl.to(arcRef.current, {
       opacity: 0.8,
-      duration: 2.0,
+      duration: 1.2,               // was 2.0
       ease: "power2.inOut",
     }, 0);
 
     // 2. Comet sweep
-    tl.fromTo(cometRef.current, 
+    tl.fromTo(cometRef.current,
       { strokeDashoffset: 600 },
-      { strokeDashoffset: -200, duration: 3.0, ease: "power2.inOut" },
+      { strokeDashoffset: -200, duration: 1.8, ease: "power2.inOut" }, // was 3.0
       0
     );
 
     // 3. Cinematic light beam sweep
     tl.fromTo(lightBeamRef.current,
       { x: "-100%" },
-      { x: "200%", duration: 4, ease: "power1.inOut" },
+      { x: "200%", duration: 2.4, ease: "power1.inOut" },             // was 4.0
       0
     );
 
-    // 4. Words animation - Slightly faster but same solid style
-    const wordDuration = 0.75; 
+    // 4. Words animation — same solid style, tighter cadence
+    const wordDuration = 0.48;     // was 0.75
 
     words.forEach((word, index) => {
       const el = wordsRef.current[index];
-      const startTime = 0.5 + index * wordDuration;
-      
-      tl.fromTo(el, 
+      const startTime = 0.3 + index * wordDuration; // was 0.5 start offset
+
+      tl.fromTo(el,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.2, ease: "power4.out" },
+        { opacity: 1, y: 0, duration: 0.18, ease: "power4.out" },     // was 0.2
         startTime
       );
-      
+
       tl.to(el, {
         opacity: 0,
-        duration: 0.01 
+        duration: 0.01
       }, startTime + wordDuration);
     });
 
-    // 5. Final Welcome
-    const welcomeTime = 0.5 + words.length * wordDuration + 0.2;
-    
+    // 5. Final Welcome — cinematic but not slow
+    const welcomeTime = 0.3 + words.length * wordDuration + 0.15;    // ≈ 3.33s
+
     tl.to([weTextRef.current, wordsContainerRef.current], {
       opacity: 0,
-      duration: 0.6,
+      duration: 0.4,               // was 0.6
       ease: "power2.inOut"
-    }, welcomeTime - 0.6);
+    }, welcomeTime - 0.4);
 
     tl.fromTo(finalWelcomeRef.current,
       { opacity: 0, scale: 0.95 },
-      { opacity: 1, scale: 1, duration: 1.5, ease: "power3.out" },
+      { opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" },    // was 1.5
       welcomeTime
     );
 
     tl.to(finalWelcomeRef.current, {
       opacity: 0,
       scale: 1.05,
-      duration: 1.2,
+      duration: 0.9,               // was 1.2
       ease: "power2.in"
-    }, welcomeTime + 2.0);
+    }, welcomeTime + 1.0);         // was +2.0 — tighter hold
 
   }, [onComplete]);
 

@@ -108,30 +108,95 @@ const homeFaqs = [
 /* ─── HERO ─── */
 function HeroSection() {
   return (
-    <section style={{ minHeight: '90vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', position: 'relative', overflow: 'hidden', padding: '100px 24px 40px' }}>
+    <section style={{
+      minHeight: '95vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      position: 'relative',
+      overflow: 'hidden',
+      padding: '120px clamp(2.5rem, 7vw, 6rem) 60px',
+    }}>
       <HeroBackgroundVideo />
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 1000 }}>
+
+      {/* Cinematic left-side atmospheric overlay — soft blue-dark fade, not a solid box */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: [
+          /* Deep blue-dark radial sweep from the left — brand-matched atmosphere */
+          'radial-gradient(ellipse 70% 110% at -5% 50%, rgba(6,10,32,0.88) 0%, rgba(8,14,44,0.60) 35%, rgba(10,20,60,0.20) 60%, transparent 75%)',
+          /* Horizontal linear fade — transitions smoothly into the video */
+          'linear-gradient(90deg, rgba(5,9,28,0.75) 0%, rgba(6,11,35,0.40) 30%, rgba(8,14,40,0.10) 52%, transparent 65%)',
+          /* Very subtle blue inner glow at the far left edge — depth cue */
+          'linear-gradient(90deg, rgba(20,50,140,0.18) 0%, rgba(20,50,140,0.06) 20%, transparent 45%)',
+        ].join(', '),
+        zIndex: 1,
+        pointerEvents: 'none',
+      }} />
+
+      {/* Hero content — left-aligned column */}
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        maxWidth: 660,
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+      }}>
         <ScrollReveal delay={0.1}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '1px solid var(--color-border)', borderRadius: 100, padding: '8px 24px', fontSize: 14, fontWeight: 600, fontFamily: 'var(--font-heading)', color: 'var(--color-text-secondary)', marginBottom: 32, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)' }}>
+          <span style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            border: '1px solid var(--color-border)', borderRadius: 100,
+            padding: '8px 24px', fontSize: 14, fontWeight: 600,
+            fontFamily: 'var(--font-heading)', color: 'var(--color-text-secondary)',
+            marginBottom: 32, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(10px)',
+          }}>
             <span style={{ color: 'var(--color-blue-electric)' }}>✦</span>
-            Among the Best AI & Digital Services Agencies
+            Among the Best AI &amp; Digital Services Agencies
           </span>
         </ScrollReveal>
+
         <ScrollReveal delay={0.2}>
-          <h1 style={{ marginBottom: 24, fontSize: 'clamp(3.5rem, 9vw, 7rem)' }}>From Clicks<br />to <span className="gradient-text-animated">Code.</span></h1>
+          <h1 style={{ marginBottom: 24, fontSize: 'clamp(3.2rem, 8vw, 6.5rem)', textAlign: 'left' }}>
+            From Clicks<br />to <span className="gradient-text-animated">Code.</span>
+          </h1>
         </ScrollReveal>
+
         <ScrollReveal delay={0.35}>
-          <p style={{ fontSize: 'clamp(1.15rem, 1.8vw, 1.4rem)', fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif", color: '#fff', fontWeight: 400, maxWidth: 650, margin: '0 auto 40px', lineHeight: 1.7, letterSpacing: '0.01em' }}>
+          <p style={{
+            fontSize: 'clamp(1.05rem, 1.5vw, 1.25rem)',
+            fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+            color: 'rgba(255,255,255,0.82)', fontWeight: 400,
+            maxWidth: 560, margin: '0 0 40px', lineHeight: 1.75,
+            letterSpacing: '0.01em', textAlign: 'left',
+          }}>
             We build performance systems that scale globally — paid media, AI automation, and web development for companies that demand results.
           </p>
         </ScrollReveal>
+
         <ScrollReveal delay={0.5}>
-          <div style={{ display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/contact" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: 16 }}>Start a Project <ArrowRight size={18} /></Link>
-            <Link to="/work" className="btn btn-ghost" style={{ padding: '16px 32px', fontSize: 16 }}>See Our Work</Link>
+          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
+            <Link to="/contact" className="btn btn-primary" style={{ padding: '16px 32px', fontSize: 16 }}>
+              Start a Project <ArrowRight size={18} />
+            </Link>
+            <Link to="/work" className="btn btn-ghost" style={{ padding: '16px 32px', fontSize: 16 }}>
+              See Our Work
+            </Link>
           </div>
         </ScrollReveal>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .hero-left-content {
+            align-items: center !important;
+            text-align: center !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
@@ -166,33 +231,203 @@ function StatsSection() {
 }
 
 /* ─── WORK PREVIEW ─── */
+function MetricCounter({ raw }) {
+  const ref = useRef(null);
+  const [display, setDisplay] = useState('0');
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !hasRun.current) {
+        hasRun.current = true;
+        observer.disconnect();
+        // Parse: prefix (+), numeric value (int or float), suffix (%, x, +)
+        const prefixMatch = raw.match(/^\+/);
+        const prefix = prefixMatch ? '+' : '';
+        const stripped = raw.replace(/^\+/, '');
+        const numMatch = stripped.match(/[\d,.]+/);
+        if (!numMatch) { setDisplay(raw); return; }
+        const numStr = numMatch[0].replace(/,/g, '');
+        const target = parseFloat(numStr);
+        const isFloat = numStr.includes('.');
+        const suffix = stripped.slice(numMatch[0].length); // %, x, +
+        const useComma = raw.includes(',');
+        const duration = 1000;
+        let start = null;
+        const ease = (t) => 1 - Math.pow(1 - t, 3);
+        const tick = (ts) => {
+          if (!start) start = ts;
+          const progress = Math.min((ts - start) / duration, 1);
+          const value = ease(progress) * target;
+          let formatted;
+          if (isFloat) {
+            formatted = value.toFixed(1);
+          } else if (useComma && value >= 1000) {
+            formatted = Math.floor(value).toLocaleString('en-US');
+          } else {
+            formatted = Math.floor(value).toString();
+          }
+          setDisplay(`${prefix}${formatted}${suffix}`);
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.35 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [raw]);
+
+  return <span ref={ref}>{display}</span>;
+}
+
+function WorkCard({ c, i }) {
+  const cardRef = useRef(null);
+  const glowRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    const card = cardRef.current;
+    const glow = glowRef.current;
+    if (!card || !glow) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    glow.style.background = `radial-gradient(320px circle at ${x}px ${y}px, rgba(59,130,246,0.07) 0%, transparent 70%)`;
+  };
+
+  const handleEnter = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.borderColor = 'rgba(59,130,246,0.55)';
+    card.style.transform = 'translateY(-7px)';
+    card.style.boxShadow = '0 20px 48px rgba(0,0,0,0.55), 0 0 0 1px rgba(59,130,246,0.18), 0 8px 32px rgba(59,130,246,0.10)';
+    card.style.background = 'rgba(10,15,35,0.72)';
+  };
+
+  const handleLeave = () => {
+    const card = cardRef.current;
+    const glow = glowRef.current;
+    if (!card) return;
+    card.style.borderColor = 'var(--color-border)';
+    card.style.transform = 'translateY(0)';
+    card.style.boxShadow = 'none';
+    card.style.background = 'transparent';
+    if (glow) glow.style.background = 'transparent';
+  };
+
+  return (
+    <ScrollReveal delay={i * 0.1}>
+      <div
+        ref={cardRef}
+        className="card work-result-card"
+        style={{
+          cursor: 'pointer',
+          height: '100%',
+          background: 'transparent',
+          borderColor: 'var(--color-border)',
+          transition: 'border-color 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s ease, background 0.35s ease',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+        onMouseEnter={handleEnter}
+        onMouseLeave={handleLeave}
+        onMouseMove={handleMouseMove}
+      >
+        {/* Cursor-tracking atmospheric glow */}
+        <div
+          ref={glowRef}
+          style={{
+            position: 'absolute', inset: 0, pointerEvents: 'none',
+            transition: 'background 0.1s ease', zIndex: 0, borderRadius: 'inherit',
+          }}
+        />
+
+        {/* Travelling border highlight — visible on hover via CSS class */}
+        <div className="work-card-border-sweep" aria-hidden="true" />
+
+        {/* Card content */}
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <p style={{ fontSize: 14, color: 'var(--color-blue-electric)', fontWeight: 600, marginBottom: 12 }}>{c.cat}</p>
+          <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', marginBottom: 12 }}>{c.name}</h3>
+          <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', marginBottom: 24 }}>{c.desc}</p>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', fontWeight: 800, color: '#fff' }}>
+              <MetricCounter raw={c.metric} />
+            </span>
+            <span style={{ fontSize: 16, color: 'var(--color-text-muted)' }}>{c.metricLabel}</span>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  );
+}
+
 function WorkSection() {
   return (
-    <section style={{ padding: '4rem 0' }}>
-      <div className="container">
+    <section style={{ padding: '4rem 0', position: 'relative', overflow: 'hidden' }}>
+      {/* Subtle ambient depth gradient — barely visible, adds atmospheric warmth */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0,
+        background: 'radial-gradient(ellipse 70% 60% at 50% 80%, rgba(37,99,235,0.04) 0%, transparent 70%)',
+      }} />
+
+      <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <ScrollReveal><h2 className="section-heading" style={{ marginBottom: 56 }}>Results, not decks.</h2></ScrollReveal>
         <div className="grid-2">
-          {cases.map((c, i) => (
-            <ScrollReveal key={i} delay={i * 0.1}>
-              <div className="card" style={{ cursor: 'pointer', height: '100%', background: 'transparent', borderColor: 'var(--color-border)', transition: 'all 0.4s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--color-blue-electric)'; e.currentTarget.style.transform = 'translateY(-8px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                <p style={{ fontSize: 14, color: 'var(--color-blue-electric)', fontWeight: 600, marginBottom: 12 }}>{c.cat}</p>
-                <h3 style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', marginBottom: 12 }}>{c.name}</h3>
-                <p style={{ fontSize: 16, color: 'var(--color-text-secondary)', marginBottom: 24 }}>{c.desc}</p>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-                  <span style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', fontWeight: 800, color: '#fff' }}>{c.metric}</span>
-                  <span style={{ fontSize: 16, color: 'var(--color-text-muted)' }}>{c.metricLabel}</span>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+          {cases.map((c, i) => <WorkCard key={i} c={c} i={i} />)}
         </div>
-        <ScrollReveal delay={0.3}><div style={{ marginTop: 64, textAlign: 'center' }}><Link to="/work" className="btn-text" style={{ fontSize: 18 }}>View All Work <ArrowRight size={20} /></Link></div></ScrollReveal>
+        <ScrollReveal delay={0.3}>
+          <div style={{ marginTop: 64, textAlign: 'center' }}>
+            <Link to="/work" className="btn-text" style={{ fontSize: 18 }}>View All Work <ArrowRight size={20} /></Link>
+          </div>
+        </ScrollReveal>
       </div>
+
+      <style>{`
+        /* Travelling border highlight */
+        .work-result-card::before {
+          content: '';
+          position: absolute;
+          inset: -1px;
+          border-radius: inherit;
+          padding: 1px;
+          background: conic-gradient(
+            from var(--angle, 0deg),
+            transparent 0deg,
+            rgba(59,130,246,0.55) 60deg,
+            transparent 120deg
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          opacity: 0;
+          transition: opacity 0.35s ease;
+          pointer-events: none;
+          z-index: 2;
+        }
+        .work-result-card:hover::before {
+          opacity: 1;
+          animation: work-border-spin 3s linear infinite;
+        }
+        @property --angle {
+          syntax: '<angle>';
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes work-border-spin {
+          to { --angle: 360deg; }
+        }
+
+        /* Fallback for browsers without @property support — simple pulse */
+        @supports not (background: conic-gradient(from 0deg, red, blue)) {
+          .work-result-card::before { display: none; }
+        }
+      `}</style>
     </section>
   );
 }
+
 
 /* ─── PROCESS JOURNEY (CINEMATIC SCROLL) ─── */
 function ProcessSection() {
