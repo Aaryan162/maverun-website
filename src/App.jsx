@@ -20,13 +20,20 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
-  const [showPreloader, setShowPreloader] = useState(true);
+// Inner component that has access to router context
+function AppContent() {
+  const { pathname } = useLocation();
+  const isHomepage = pathname === '/';
+  // Only initialise the preloader if we landed on the homepage
+  const [showPreloader, setShowPreloader] = useState(isHomepage);
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
-      {showPreloader && <Preloader onComplete={() => setShowPreloader(false)} />}
+      {/* Preloader is ONLY rendered when on the homepage and not yet dismissed */}
+      {isHomepage && showPreloader && (
+        <Preloader onComplete={() => setShowPreloader(false)} />
+      )}
       <Navbar />
       <main style={{ minHeight: '100vh' }}>
         <Routes>
@@ -40,6 +47,14 @@ export default function App() {
       </main>
       <Footer />
       <WhatsAppButton />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }

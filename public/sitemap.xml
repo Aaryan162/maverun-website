@@ -7,7 +7,7 @@
   <!-- Homepage — Highest Priority -->
   <url>
     <loc>https://maverun.com/</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Services Page -->
   <url>
     <loc>https://maverun.com/services</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Work / Case Studies Page -->
   <url>
     <loc>https://maverun.com/work</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -31,7 +31,7 @@
   <!-- About Page -->
   <url>
     <loc>https://maverun.com/about</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -39,7 +39,7 @@
   <!-- Contact Page -->
   <url>
     <loc>https://maverun.com/contact</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -47,7 +47,7 @@
   <!-- FAQ Page -->
   <url>
     <loc>https://maverun.com/faq</loc>
-    <lastmod>2026-05-01</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

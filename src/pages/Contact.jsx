@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowRight, MapPin, Mail, Globe, CheckCircle } from 'lucide-react';
+import { ArrowRight, MapPin, Mail, CheckCircle } from 'lucide-react';
 import ScrollReveal from '../components/ScrollReveal';
 import HeroBackground from '../components/HeroBackground';
 
@@ -36,7 +36,7 @@ function FacebookIcon() {
 }
 
 export default function Contact() {
-  const [submitted, setSubmitted] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [currency, setCurrency] = useState('INR');
   const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', service: '', budget: '', message: '' });
@@ -84,13 +84,40 @@ export default function Contact() {
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(dataToSend)
       });
-      setSubmitted(true);
+
+      // ── Conversion Tracking ──────────────────────────────────────
+      // 1. GTM dataLayer event — triggers GTM triggers (form_submission)
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'form_submission' });
+
+      // 2. GA4 direct event — generate_lead (fires even without GTM)
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'Contact Form',
+          event_label: form.service || 'General',
+        });
+        // 3. Google Ads conversion
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-18202384195',
+        });
+      }
+      // ─────────────────────────────────────────────────────────────
+
+      // Show success popup modal
+      setShowSuccessModal(true);
     } catch (err) {
       console.error(err);
       alert("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowSuccessModal(false);
+    setForm({ name: '', email: '', phone: '', company: '', service: '', budget: '', message: '' });
+    setErrors({});
+    setCurrency('INR');
   };
 
   const focusStyle = (e) => {
@@ -106,6 +133,136 @@ export default function Contact() {
 
   return (
     <>
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div
+          id="contact-success-modal"
+          onClick={(e) => { if (e.target === e.currentTarget) handleModalClose(); }}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            background: 'rgba(5, 7, 12, 0.85)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            padding: '1.5rem',
+            animation: 'modalFadeIn 0.5s ease-out forwards',
+          }}
+        >
+          <div style={{
+            position: 'relative',
+            width: '100%', maxWidth: 480,
+            background: 'linear-gradient(160deg, rgba(16, 20, 31, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%)',
+            border: '1px solid rgba(59,130,246,0.15)',
+            borderTop: '1px solid rgba(59,130,246,0.3)',
+            borderRadius: 32,
+            padding: 'clamp(3rem, 6vw, 4.5rem) clamp(2rem, 5vw, 3.5rem)',
+            textAlign: 'center',
+            boxShadow: '0 50px 100px -20px rgba(0,0,0,1), 0 0 0 1px rgba(26,143,255,0.05), inset 0 2px 20px rgba(255,255,255,0.02)',
+            animation: 'modalSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            overflow: 'hidden',
+          }}>
+            {/* Ambient deep glow */}
+            <div style={{ position: 'absolute', top: -100, left: '50%', transform: 'translateX(-50%)', width: 300, height: 300, background: 'var(--color-blue-electric)', filter: 'blur(140px)', opacity: 0.15, pointerEvents: 'none' }} />
+
+            {/* Success Icon Area */}
+            <div style={{ 
+              position: 'relative', 
+              display: 'inline-flex', 
+              justifyContent: 'center', 
+              alignItems: 'center',
+              marginBottom: 36,
+              animation: 'iconPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both'
+            }}>
+              {/* Outer soft halo */}
+              <div style={{ position: 'absolute', inset: -24, borderRadius: '50%', background: 'rgba(59,130,246,0.05)', border: '1px solid rgba(59,130,246,0.1)' }} />
+              {/* Inner brighter ring */}
+              <div style={{ position: 'absolute', inset: -12, borderRadius: '50%', background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)' }} />
+              {/* Core icon background */}
+              <div style={{ position: 'relative', display: 'flex', padding: 20, borderRadius: '50%', background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(37,99,235,0.1))', boxShadow: '0 0 30px rgba(59,130,246,0.2), inset 0 0 20px rgba(255,255,255,0.05)' }}>
+                <CheckCircle size={48} style={{ color: 'var(--color-blue-electric)', filter: 'drop-shadow(0 0 12px rgba(59,130,246,0.6))' }} strokeWidth={2.5} />
+              </div>
+            </div>
+
+            {/* Typography */}
+            <h3 style={{ 
+              fontSize: 'clamp(1.75rem, 4vw, 2.25rem)', 
+              marginBottom: 16, 
+              lineHeight: 1.15, 
+              position: 'relative', 
+              zIndex: 1,
+              animation: 'contentFade 0.5s ease-out 0.2s both'
+            }}>
+              <span style={{
+                background: 'linear-gradient(135deg, #fff 0%, #E2E8F0 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                letterSpacing: '-0.02em',
+                fontWeight: 800
+              }}>Message Sent</span>
+            </h3>
+
+            <p style={{ 
+              color: 'var(--color-text-secondary)', 
+              fontSize: 17, 
+              lineHeight: 1.6, 
+              marginBottom: 44, 
+              position: 'relative', 
+              zIndex: 1,
+              maxWidth: 340,
+              marginInline: 'auto',
+              animation: 'contentFade 0.5s ease-out 0.3s both'
+            }}>
+              Thank you for contacting Maverun. We've received your details and will get back to you shortly.
+            </p>
+
+            {/* Button */}
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'center', 
+              position: 'relative', 
+              zIndex: 1,
+              animation: 'contentFade 0.5s ease-out 0.4s both'
+            }}>
+              <button
+                id="contact-success-ok"
+                onClick={handleModalClose}
+                style={{
+                  padding: '16px 56px',
+                  fontSize: 16,
+                  borderRadius: 100,
+                  boxShadow: '0 8px 24px rgba(37,99,235,0.25), inset 0 1px 1px rgba(255,255,255,0.2)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  letterSpacing: '0.04em',
+                  fontWeight: 600,
+                  color: '#fff',
+                  transition: 'all 0.3s ease',
+                  background: 'linear-gradient(180deg, var(--color-blue-electric) 0%, var(--color-blue) 100%)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 12px 32px rgba(37,99,235,0.35), inset 0 1px 1px rgba(255,255,255,0.2)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,99,235,0.25), inset 0 1px 1px rgba(255,255,255,0.2)';
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.outline = 'none';
+                  e.currentTarget.style.boxShadow = '0 0 0 4px rgba(59,130,246,0.3), 0 8px 24px rgba(37,99,235,0.25), inset 0 1px 1px rgba(255,255,255,0.2)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,99,235,0.25), inset 0 1px 1px rgba(255,255,255,0.2)';
+                }}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero */}
       <section style={{ paddingTop: 160, paddingBottom: 60, position: 'relative', overflow: 'hidden' }}>
         <HeroBackground />
@@ -158,93 +315,81 @@ export default function Contact() {
               </div>
             </ScrollReveal>
 
-            {/* Right */}
+            {/* Right — form always visible */}
             <ScrollReveal direction="right">
-              {!submitted ? (
-                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                  <div className="grid-2" style={{ gap: 24 }}>
-                    <div>
-                      <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Full Name *</label>
-                      <input name="name" value={form.name} onChange={handleChange} required maxLength={80} style={inputStyle} placeholder="Your name" onFocus={focusStyle} onBlur={blurStyle} />
-                      {errors.name && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.name}</span>}
-                    </div>
-                    <div>
-                      <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Work Email *</label>
-                      <input name="email" type="email" value={form.email} onChange={handleChange} required style={inputStyle} placeholder="you@company.com" onFocus={focusStyle} onBlur={blurStyle} />
-                      {errors.email && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.email}</span>}
-                    </div>
-                  </div>
-                  
-                  <div className="grid-2" style={{ gap: 24 }}>
-                    <div>
-                      <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Phone Number *</label>
-                      <input name="phone" type="tel" value={form.phone} onChange={handleChange} required maxLength={20} style={inputStyle} placeholder="+1 (555) 000-0000" onFocus={focusStyle} onBlur={blurStyle} />
-                      {errors.phone && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.phone}</span>}
-                    </div>
-                    <div>
-                      <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Company / Brand *</label>
-                      <input name="company" value={form.company} onChange={handleChange} required maxLength={50} style={inputStyle} placeholder="Company name" onFocus={focusStyle} onBlur={blurStyle} />
-                      {errors.company && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.company}</span>}
-                    </div>
-                  </div>
-
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <div className="grid-2" style={{ gap: 24 }}>
                   <div>
-                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Service Interested In *</label>
-                    <select name="service" value={form.service} onChange={handleChange} required style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focusStyle} onBlur={blurStyle}>
-                      <option value="" style={{ background: '#000' }}>Select a service</option>
-                      {serviceOptions.map(s => <option key={s} value={s} style={{ background: '#000' }}>{s}</option>)}
-                    </select>
-                    {errors.service && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.service}</span>}
+                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Full Name *</label>
+                    <input name="name" value={form.name} onChange={handleChange} required maxLength={80} style={inputStyle} placeholder="Your name" onFocus={focusStyle} onBlur={blurStyle} />
+                    {errors.name && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.name}</span>}
                   </div>
-                  
                   <div>
-                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 12, display: 'block' }}>Budget Range *</label>
-                    <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
-                      {['INR', 'USD', 'EUR'].map(c => (
-                        <button key={c} type="button" onClick={() => { setCurrency(c); setForm({ ...form, budget: '' }); }} style={{
-                          padding: '8px 20px', borderRadius: 8, fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-heading)', cursor: 'pointer', transition: 'all 0.3s',
-                          background: currency === c ? 'var(--color-blue)' : 'transparent',
-                          color: currency === c ? '#fff' : 'var(--color-text-muted)',
-                          border: `1px solid ${currency === c ? 'var(--color-blue)' : 'var(--color-border)'}`,
-                          boxShadow: currency === c ? '0 0 15px rgba(26,143,255,0.3)' : 'none'
-                        }}>
-                          {c === 'INR' ? '₹' : c === 'USD' ? '$' : '€'} {c}
-                        </button>
-                      ))}
-                    </div>
-                    <select name="budget" value={form.budget} onChange={handleChange} required style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focusStyle} onBlur={blurStyle}>
-                      <option value="" style={{ background: '#000' }}>Select budget range</option>
-                      {budgetRanges[currency].map(b => <option key={b} value={b} style={{ background: '#000' }}>{b}</option>)}
-                    </select>
-                    {errors.budget && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.budget}</span>}
+                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Work Email *</label>
+                    <input name="email" type="email" value={form.email} onChange={handleChange} required style={inputStyle} placeholder="you@company.com" onFocus={focusStyle} onBlur={blurStyle} />
+                    {errors.email && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.email}</span>}
                   </div>
-                  
-                  <div>
-                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
-                      <span>Tell us about your project *</span>
-                      <span style={{ color: form.message.length > 380 ? '#ff4444' : 'var(--color-text-steel)', fontWeight: 400 }}>{form.message.length}/400</span>
-                    </label>
-                    <textarea name="message" value={form.message} onChange={handleChange} rows={6} maxLength={400} required style={{ ...inputStyle, resize: 'vertical' }} placeholder="What are you looking to build or improve?" onFocus={focusStyle} onBlur={blurStyle} />
-                    {errors.message && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.message}</span>}
-                  </div>
-                  
-                  <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                    <button type="submit" disabled={isSubmitting} className="btn btn-primary" style={{ padding: '20px 48px', fontSize: 18, borderRadius: 12, marginTop: 8, boxShadow: '0 0 30px rgba(18,55,216,0.3)', border: '1px solid rgba(255,255,255,0.1)', cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.7 : 1, display: 'flex', alignItems: 'center', gap: 12 }}>
-                      {isSubmitting ? 'Sending...' : <>Send Message <ArrowRight size={20} /></>}
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '80px 40px', background: 'linear-gradient(180deg, rgba(26,143,255,0.05) 0%, rgba(0,0,0,0) 100%)', borderRadius: 32, border: '1px solid rgba(26,143,255,0.2)', borderTop: '1px solid var(--color-blue-electric)', animation: 'fadeSlide 0.6s ease', boxShadow: '0 30px 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(26,143,255,0.05)', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ position: 'absolute', top: -100, left: '50%', transform: 'translateX(-50%)', width: 200, height: 200, background: 'var(--color-blue-electric)', filter: 'blur(100px)', opacity: 0.3, pointerEvents: 'none' }} />
-                  <div style={{ display: 'inline-flex', padding: 24, borderRadius: '50%', background: 'rgba(26,143,255,0.1)', border: '1px solid rgba(26,143,255,0.2)', marginBottom: 32 }}>
-                    <CheckCircle size={56} style={{ color: 'var(--color-blue-electric)', filter: 'drop-shadow(0 0 15px rgba(26,143,255,0.8))' }} />
-                  </div>
-                  <h3 style={{ fontSize: 'clamp(2rem, 3vw, 2.5rem)', marginBottom: 16, lineHeight: 1.2 }}><span className="gradient-text-animated">Thanks! Your message</span><br/>has been sent successfully.</h3>
-                  <p style={{ color: 'var(--color-text-secondary)', fontSize: 18, marginBottom: 40 }}>We'll review your details and contact you soon.</p>
-                  <p style={{ color: '#fff', fontSize: 16, fontWeight: 600, letterSpacing: '0.05em' }}>— The Co-Founders</p>
                 </div>
-              )}
+                
+                <div className="grid-2" style={{ gap: 24 }}>
+                  <div>
+                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Phone Number *</label>
+                    <input name="phone" type="tel" value={form.phone} onChange={handleChange} required maxLength={20} style={inputStyle} placeholder="+1 (555) 000-0000" onFocus={focusStyle} onBlur={blurStyle} />
+                    {errors.phone && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.phone}</span>}
+                  </div>
+                  <div>
+                    <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Company / Brand *</label>
+                    <input name="company" value={form.company} onChange={handleChange} required maxLength={50} style={inputStyle} placeholder="Company name" onFocus={focusStyle} onBlur={blurStyle} />
+                    {errors.company && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.company}</span>}
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'block' }}>Service Interested In *</label>
+                  <select name="service" value={form.service} onChange={handleChange} required style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focusStyle} onBlur={blurStyle}>
+                    <option value="" style={{ background: '#000' }}>Select a service</option>
+                    {serviceOptions.map(s => <option key={s} value={s} style={{ background: '#000' }}>{s}</option>)}
+                  </select>
+                  {errors.service && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.service}</span>}
+                </div>
+                
+                <div>
+                  <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 12, display: 'block' }}>Budget Range *</label>
+                  <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+                    {['INR', 'USD', 'EUR'].map(c => (
+                      <button key={c} type="button" onClick={() => { setCurrency(c); setForm({ ...form, budget: '' }); }} style={{
+                        padding: '8px 20px', borderRadius: 8, fontSize: 14, fontWeight: 700, fontFamily: 'var(--font-heading)', cursor: 'pointer', transition: 'all 0.3s',
+                        background: currency === c ? 'var(--color-blue)' : 'transparent',
+                        color: currency === c ? '#fff' : 'var(--color-text-muted)',
+                        border: `1px solid ${currency === c ? 'var(--color-blue)' : 'var(--color-border)'}`,
+                        boxShadow: currency === c ? '0 0 15px rgba(26,143,255,0.3)' : 'none'
+                      }}>
+                        {c === 'INR' ? '₹' : c === 'USD' ? '$' : '€'} {c}
+                      </button>
+                    ))}
+                  </div>
+                  <select name="budget" value={form.budget} onChange={handleChange} required style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }} onFocus={focusStyle} onBlur={blurStyle}>
+                    <option value="" style={{ background: '#000' }}>Select budget range</option>
+                    {budgetRanges[currency].map(b => <option key={b} value={b} style={{ background: '#000' }}>{b}</option>)}
+                  </select>
+                  {errors.budget && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.budget}</span>}
+                </div>
+                
+                <div>
+                  <label style={{ fontSize: 14, fontWeight: 600, color: '#fff', marginBottom: 8, display: 'flex', justifyContent: 'space-between' }}>
+                    <span>Tell us about your project *</span>
+                    <span style={{ color: form.message.length > 380 ? '#ff4444' : 'var(--color-text-steel)', fontWeight: 400 }}>{form.message.length}/400</span>
+                  </label>
+                  <textarea name="message" value={form.message} onChange={handleChange} rows={6} maxLength={400} required style={{ ...inputStyle, resize: 'vertical' }} placeholder="What are you looking to build or improve?" onFocus={focusStyle} onBlur={blurStyle} />
+                  {errors.message && <span style={{ color: '#ff4444', fontSize: 13, marginTop: 6, display: 'block' }}>{errors.message}</span>}
+                </div>
+                
+                <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary" style={{ padding: '20px 48px', fontSize: 18, borderRadius: 12, marginTop: 8, boxShadow: '0 0 30px rgba(18,55,216,0.3)', border: '1px solid rgba(255,255,255,0.1)', cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.7 : 1, display: 'flex', alignItems: 'center', gap: 12 }}>
+                    {isSubmitting ? 'Sending...' : <>Send Message <ArrowRight size={20} /></>}
+                  </button>
+                </div>
+              </form>
             </ScrollReveal>
           </div>
         </div>
@@ -253,6 +398,10 @@ export default function Contact() {
       <style>{`
         @media (max-width: 992px) { .contact-grid { grid-template-columns: 1fr !important; gap: 64px !important; } }
         @keyframes fadeSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalSlideUp { from { opacity: 0; transform: translateY(40px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes iconPop { 0% { transform: scale(0.6); opacity: 0; } 70% { transform: scale(1.08); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes contentFade { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
       `}</style>
     </>
   );

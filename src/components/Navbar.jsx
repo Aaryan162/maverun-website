@@ -113,7 +113,7 @@ export default function Navbar() {
             whiteSpace: 'nowrap',
           }}>
             <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
-              Start a Project <ArrowRight size={16} />
+              Contact Us <ArrowRight size={16} />
             </span>
             <div className="btn-shimmer" style={{ position: 'absolute', top: 0, left: '-100%', width: '200%', height: '100%', background: 'linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.08) 50%, transparent 75%)', transition: 'left 0.6s ease' }} />
           </Link>
@@ -151,7 +151,7 @@ export default function Navbar() {
             textDecoration: 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10,
             boxShadow: '0 8px 25px rgba(26,143,255,0.3)', transitionDelay: '0.35s'
           }}>
-            Start a Project <ArrowRight size={18} />
+            Contact Us <ArrowRight size={18} />
           </Link>
         </div>
         

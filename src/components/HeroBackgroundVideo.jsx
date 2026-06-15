@@ -9,17 +9,53 @@ export default function HeroBackgroundVideo() {
     const video = videoRef.current;
     if (!video) return;
 
-    const onCanPlay = () => setVideoLoaded(true);
-    const onError = () => setVideoLoaded(false);
+    let isMounted = true;
+
+    // 1. If video is already loaded from cache, trigger loaded state immediately
+    if (video.readyState >= 3) {
+      setVideoLoaded(true);
+    }
+
+    const onCanPlay = () => {
+      if (isMounted) setVideoLoaded(true);
+    };
+    
+    const onError = () => {
+      if (isMounted) setVideoLoaded(false);
+    };
 
     video.addEventListener('canplaythrough', onCanPlay);
     video.addEventListener('error', onError);
 
-    video.play().catch(() => {});
+    // 2. Resilient Play Function (handles AbortError on unmount)
+    const playVideo = async () => {
+      try {
+        if (video.paused) {
+          await video.play();
+        }
+      } catch (err) {
+        // Autoplay policy or route-change abort, ignore gracefully
+      }
+    };
+    
+    playVideo();
+
+    // 3. Mobile/Browser Visibility Handler
+    // Pauses video when tab is hidden, resumes when active
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        video.pause();
+      } else {
+        playVideo();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
+      isMounted = false;
       video.removeEventListener('canplaythrough', onCanPlay);
       video.removeEventListener('error', onError);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
