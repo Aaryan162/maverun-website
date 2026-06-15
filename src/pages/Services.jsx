@@ -49,7 +49,7 @@ export default function Services() {
           <div className="container">
             <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 80, alignItems: 'center' }} className="service-detail-grid">
               
-              <ScrollReveal direction={i % 2 === 0 ? 'left' : 'right'} style={{ order: i % 2 === 0 ? 0 : 1 }}>
+              <ScrollReveal direction="up" className={i % 2 === 0 ? 'desktop-order-0' : 'desktop-order-1'} style={{ minWidth: 0, width: '100%' }}>
                 <div style={{ position: 'relative', borderRadius: 24, overflow: 'hidden', border: '1px solid var(--color-border)', aspectRatio: '4/3', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
                   <img src={s.image} alt={s.name} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.6) contrast(1.2)' }} />
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }} />
@@ -61,14 +61,14 @@ export default function Services() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal direction={i % 2 === 0 ? 'right' : 'left'} style={{ order: i % 2 === 0 ? 1 : 0 }}>
+              <ScrollReveal direction="up" className={i % 2 === 0 ? 'desktop-order-1' : 'desktop-order-0'} style={{ minWidth: 0, width: '100%' }}>
                 <span className="section-label" style={{ display: 'inline-block', marginBottom: 16 }}>Service 0{i + 1}</span>
                 <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', marginBottom: 20, lineHeight: 1.1 }}>{s.headline}</h2>
                 <p style={{ marginBottom: 32, fontSize: 18, color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{s.desc}</p>
                 
                 <div style={{ marginBottom: 32 }}>
                   <h4 style={{ fontFamily: 'var(--font-heading)', fontSize: 14, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#fff', marginBottom: 20 }}>What's Included</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 24px' }}>
+                  <div className="service-items-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 24px' }}>
                     {s.items.map(item => (
                       <div key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 15, color: 'var(--color-text-secondary)' }}>
                         <Check size={18} style={{ color: 'var(--color-blue-electric)', flexShrink: 0, marginTop: 2 }} />
@@ -81,7 +81,9 @@ export default function Services() {
                 <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
                   {s.tools.map(t => <span key={t} className="tag" style={{ padding: '8px 16px', fontSize: 14 }}>{t}</span>)}
                 </div>
-                <Link to="/contact" className="btn btn-primary" style={{ fontSize: 16, padding: '16px 32px' }}>{s.cta}</Link>
+                <div className="service-cta-container">
+                  <Link to="/contact" className="btn btn-primary service-btn" style={{ fontSize: 'clamp(14px, 3vw, 16px)', padding: 'clamp(12px, 3vw, 16px) clamp(20px, 5vw, 32px)', boxSizing: 'border-box', textAlign: 'center', display: 'inline-flex', justifyContent: 'center', alignItems: 'center' }}>{s.cta}</Link>
+                </div>
               </ScrollReveal>
 
             </div>
@@ -168,19 +170,31 @@ export default function Services() {
         <div className="container text-center" style={{ position: 'relative', zIndex: 1 }}>
           <ScrollReveal><h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', marginBottom: 24, lineHeight: 1.1 }}>Ready to talk about<br/><span className="gradient-text-animated">what you need?</span></h2></ScrollReveal>
           <ScrollReveal delay={0.1}>
-            <Link to="/contact" className="btn btn-primary" style={{ padding: '20px 48px', fontSize: 18, borderRadius: 12, boxShadow: '0 0 30px rgba(18,55,216,0.4)', border: '1px solid rgba(255,255,255,0.1)', marginTop: 32 }}>
-              Start a Conversation <ArrowRight size={20} />
-            </Link>
+            <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: 32 }}>
+              <Link to="/contact" className="btn btn-primary" style={{ padding: '20px 48px', fontSize: 18, borderRadius: 12, boxShadow: '0 0 30px rgba(18,55,216,0.4)', border: '1px solid rgba(255,255,255,0.1)', display: 'inline-flex', justifyContent: 'center' }}>
+                Start a Conversation <ArrowRight size={20} />
+              </Link>
+            </div>
           </ScrollReveal>
         </div>
       </section>
 
       <style>{`
+        .service-detail-grid > * { min-width: 0; max-width: 100%; box-sizing: border-box; }
+        .service-cta-container { display: flex; width: 100%; justify-content: flex-start; }
+        
+        @media (min-width: 993px) {
+          .desktop-order-0 { order: 0; }
+          .desktop-order-1 { order: 1; }
+        }
         @media (max-width: 992px) {
-          .service-detail-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .service-detail-grid > * { order: unset !important; }
+          .service-detail-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .service-items-grid { grid-template-columns: 1fr !important; }
+          .service-cta-container { justify-content: flex-start; }
         }
         @media (max-width: 480px) {
+          .service-cta-container { justify-content: stretch; }
+          .service-btn { width: 100%; }
           :root { --orbital-scale: 0.65; }
           .orbital-wrapper { width: 286px; height: 286px; }
         }

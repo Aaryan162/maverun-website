@@ -229,6 +229,9 @@ export default function About() {
             .drive-carousel-track > div span { font-size: 60px !important; margin-bottom: 16px !important; }
             .drive-carousel-track > div h3 { font-size: 18px !important; margin-bottom: 10px !important; }
             .drive-carousel-track > div p { font-size: 14px !important; }
+            
+            .industry-pill-container { gap: 8px !important; }
+            .industry-pill { padding: 12px 20px !important; font-size: 14px !important; }
           }
         `}</style>
       </section>
@@ -238,10 +241,10 @@ export default function About() {
         <div className="container text-center">
           <ScrollReveal><h2 className="section-heading" style={{ marginBottom: 20, fontSize: 'clamp(3rem, 5vw, 4rem)' }}>Industries we serve.</h2></ScrollReveal>
           <ScrollReveal delay={0.05}><p className="section-sub centered" style={{ marginBottom: 64 }}>These people understand multiple business models.</p></ScrollReveal>
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 16, maxWidth: 1000, margin: '0 auto' }}>
+          <div className="industry-pill-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 16, maxWidth: 1000, margin: '0 auto' }}>
             {industries.map((ind, i) => (
               <ScrollReveal key={ind} delay={i * 0.05}>
-                <div className="industry-pill" style={{ border: '1px solid var(--color-border)', borderRadius: 100, padding: '16px 32px', fontSize: 16, fontFamily: 'var(--font-heading)', fontWeight: 600, color: 'var(--color-text-secondary)', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', cursor: 'default', background: 'transparent', position: 'relative', overflow: 'hidden' }}
+                <div className="industry-pill" style={{ border: '1px solid var(--color-border)', borderRadius: 100, padding: '16px 32px', fontSize: 16, fontFamily: 'var(--font-heading)', fontWeight: 600, color: 'var(--color-text-secondary)', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)', cursor: 'default', background: 'transparent', position: 'relative', overflow: 'hidden', whiteSpace: 'normal', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                   onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--color-blue-electric)'; e.currentTarget.style.boxShadow = '0 0 25px rgba(26,143,255,0.25), inset 0 0 20px rgba(26,143,255,0.05)'; e.currentTarget.style.transform = 'translateY(-4px) scale(1.05)'; e.currentTarget.style.background = 'rgba(26,143,255,0.05)'; }}
                   onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-text-secondary)'; e.currentTarget.style.borderColor = 'var(--color-border)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'translateY(0) scale(1)'; e.currentTarget.style.background = 'transparent'; }}>
                   {ind}
